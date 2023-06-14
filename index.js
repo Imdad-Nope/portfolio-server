@@ -30,8 +30,15 @@ async function run() {
             console.log(data)
             const result = await dataCollection.insertOne(data);
             res.json(result);
-        })
+        });
 
+        // Get method 
+        app.get('/allData', async (req, res)=>{
+            const allData = req.body;
+            const result = await dataCollection.findOne(allData);
+            console.log(result);
+            res.json(result)
+        })
     }
     finally {
         // await client.close()
@@ -48,5 +55,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`listening on ${port}`)
+    console.log(`listening on Port: ${port}`)
 })
