@@ -33,7 +33,7 @@ async function run() {
         app.get('/allData', async(req, res)=>{
             const cursor = dataCollection.find({});
             const result = await cursor.toArray()
-            res.json(result)
+            res.send(result)
         })
     }
     finally {
