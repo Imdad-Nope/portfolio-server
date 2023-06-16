@@ -9,13 +9,10 @@ const port = process.env.PORT || 5000
 app.use(cors())
 app.use(express.json())
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.n5vc4.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.n5vc4.mongodb.net/?retryWrites=true&w=majority`; 
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-    const collection = client.db("test").collection("devices");
-    // perform actions on the collection object
-    // client.close();
-});
+
 
 async function run() {
 
@@ -32,11 +29,10 @@ async function run() {
             res.json(result);
         });
 
-        // Get method 
-        app.get('/allData', async (req, res)=>{
-            const allData = req.body;
-            const result = await dataCollection.findOne(allData);
-            console.log(result);
+        // Get Method
+        app.get('/allData', async(req, res)=>{
+            const cursor = dataCollection.find({});
+            const result = await cursor.toArray()
             res.json(result)
         })
     }
@@ -51,7 +47,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello Howdy!')
 })
 
 app.listen(port, () => {
